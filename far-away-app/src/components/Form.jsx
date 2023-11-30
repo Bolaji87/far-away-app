@@ -1,12 +1,27 @@
 import React, { useState } from "react";
 
-function Form() {
+function Form({ onAddItem }) {
 	const [description, setDescription] = useState("");
 	const [quantity, setQuantity] = useState(1);
 
 	function handleSubmit(e) {
 		e.preventDefault();
+
+		if (!description) return;
+
+		const newItem = {
+			description,
+			quantity,
+			packed: false,
+			id: crypto.randomUUID(),
+		};
+
+		onAddItem(newItem);
+
+		setDescription("");
+		setQuantity(1);
 	}
+
 	return (
 		<form className="add-form" onSubmit={handleSubmit}>
 			<h3>What do you need for your 😍 trip?</h3>
